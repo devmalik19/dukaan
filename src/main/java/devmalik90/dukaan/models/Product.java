@@ -20,7 +20,7 @@ public class Product
 
     public Product(UUID id, String name, String mrp) 
     {
-        this.id     =   UUID.randomUUID();
+        this.id     =   id;
         this.name   =   name;
         this.mrp    =   mrp;
     }
@@ -41,11 +41,11 @@ public class Product
         this.name = name;
     }
 
-    public String getMrp() {
+    public String getMRP() {
         return mrp;
     }
 
-    public void setMrp(String mrp) {
+    public void setMRP(String mrp) {
         this.mrp = mrp;
     }
 }
