@@ -1,5 +1,7 @@
 package devmalik90.dukaan.controllers;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +23,21 @@ public class ProductController
     }
 
     @GetMapping
-    public void getAll()
+    public List<Product> getAll()
     {
-
+        return productService.getAll();
     }
 
     @GetMapping("/{id}")
-    public void get(@PathVariable("id") UUID id)
+    public Optional<Product> get(@PathVariable("id") int id)
     {
-
+        return productService.get(id);
     }
 
     @PutMapping
-    public void create(@RequestBody Product product)
+    public Product create(@RequestBody Product product)
     {
-
+        return productService.create(product);
     }
 
     @PostMapping("/{id}")

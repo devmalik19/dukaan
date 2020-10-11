@@ -1,5 +1,8 @@
 package devmalik90.dukaan.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +20,18 @@ public class ProductService
         this.productDao = productDao;
     }
 
-    public boolean create(Product product)
+    public List<Product> getAll()
     {
-        productDao.insert(product);
-        return true;
+        return productDao.getAll();
+    }
+
+    public Optional<Product> get(int id)
+    {
+        return productDao.get(id);
+    }
+
+    public Product create(Product product)
+    {
+        return productDao.insert(product);
     }
 }
