@@ -12,13 +12,8 @@ import devmalik90.dukaan.models.Product;
 @Service
 public class ProductService 
 {
-    private ProductDao productDao;
-
     @Autowired
-    public ProductService(ProductDao productDao) 
-    {
-        this.productDao = productDao;
-    }
+    private ProductDao productDao;
 
     public List<Product> getAll()
     {
@@ -30,8 +25,32 @@ public class ProductService
         return productDao.get(id);
     }
 
-    public Product create(Product product)
+    public Optional<Product> create(Product product)
     {
         return productDao.insert(product);
+    }
+
+    public Optional<Product> update(int id,Product product)
+    {
+        if(get(id).isPresent())
+        {
+            product.setId(id);
+            return  productDao.update(product);
+        }
+        else
+            return null;
+
+    }
+
+    public Optional<Product> delete(int id)
+    {
+        Optional<Product>   product = get(id);
+        if(product.isPresent() && productDao.delete(id))
+        {
+            return product;
+        }
+        else
+            return null;
+
     }
 }

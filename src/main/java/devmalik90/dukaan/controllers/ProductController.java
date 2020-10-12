@@ -14,13 +14,8 @@ import devmalik90.dukaan.services.ProductService;
 @RequestMapping("/product")
 public class ProductController
 {
-    private ProductService productService;
-    
     @Autowired
-    public ProductController(ProductService productService) 
-    {
-        this.productService = productService;
-    }
+    private ProductService productService;
 
     @GetMapping
     public List<Product> getAll()
@@ -35,27 +30,27 @@ public class ProductController
     }
 
     @PutMapping
-    public Product create(@RequestBody Product product)
+    public Optional<Product> create(@RequestBody Product product)
     {
         return productService.create(product);
     }
 
     @PostMapping("/{id}")
-    public void update(@PathVariable("id") UUID id,@RequestBody Product product)
+    public Optional<Product> update(@PathVariable("id") int id,@RequestBody Product product)
     {
-
+        return productService.update(id,product);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") UUID id)
+    public Optional<Product> delete(@PathVariable("id") int id)
     {
-
+        return productService.delete(id);
     }
 
     @GetMapping("/search/{search}")
     public void search(@PathVariable String search)
     {
-        
+        // To solr seacrh
     }
 
 }
