@@ -24,27 +24,35 @@ public class ProductController
     }
 
     @GetMapping("/{id}")
-    public Optional<Product> get(@PathVariable("id") int id)
+    public Optional get(@PathVariable("id") int id)
     {
-        return productService.get(id);
+         Optional<Product> product = productService.get(id);
+         product.ifPresent(p -> {p.setMessage("Success");});
+         return product.isEmpty()?Optional.of("Not Found"):product;
     }
 
     @PutMapping
     public Optional<Product> create(@RequestBody Product product)
     {
-        return productService.create(product);
+        Optional<Product> optionalProduct =  productService.create(product);
+        optionalProduct.ifPresent(p -> p.setMessage("Product Created"));
+        return  optionalProduct;
     }
 
     @PostMapping("/{id}")
     public Optional<Product> update(@PathVariable("id") int id,@RequestBody Product product)
     {
-        return productService.update(id,product);
+        Optional<Product> optionalProduct =   productService.update(id,product);
+        optionalProduct.ifPresent(p -> p.setMessage("Product Updated"));
+        return  optionalProduct;
     }
 
     @DeleteMapping("/{id}")
     public Optional<Product> delete(@PathVariable("id") int id)
     {
-        return productService.delete(id);
+        Optional<Product> optionalProduct =   productService.delete(id);
+        optionalProduct.ifPresent(p -> p.setMessage("Product Deleted"));
+        return  optionalProduct;
     }
 
     @GetMapping("/search/{search}")

@@ -51,28 +51,22 @@ public class ProductDao
     
     public Optional<Product> insert(Product product)
     {
-        KeyHolder   keyHolder   =   new GeneratedKeyHolder();
         String sql      =   "INSERT INTO PRODUCTS(UUID,NAME,MRP) VALUES(?,?,?)";
 
         int response    = jdbcTemplate.update( con -> {
-                                PreparedStatement ps = con.prepareStatement(sql, new String[] {"id"});
+                                PreparedStatement ps = con.prepareStatement(sql);
                                 ps.setString(1,String.valueOf(product.generateUUID()));
                                 ps.setString(2,product.getName());
-                                ps.setString(3,product.getMRP());
+                                ps.setString(3,product.getMrp());
 
                                 return  ps;
-                            },keyHolder);
+                            });
 
 
         if(response==0)
-            return  null;
+            return Optional.empty();
         else
-        {
-            int id =    (Integer) keyHolder.getKey();
-            product.setId(id);
             return Optional.ofNullable(product);
-        }
-
     }
 
     public Optional<Product> update(Product product)
@@ -80,16 +74,15 @@ public class ProductDao
         String sql      =   "UPDATE PRODUCTS SET NAME = ?, MRP = ? WHERE ID = ?";
         int response    =   jdbcTemplate.update(sql,
                                 product.getName(),
-                                product.getMRP(),
+                                product.getMrp(),
                                 product.getId()
                             );
 
         if(response==0)
-            return  null;
+            return Optional.empty();
         else
-        {
             return Optional.ofNullable(product);
-        }
+
     }
 
     public boolean delete(int id)

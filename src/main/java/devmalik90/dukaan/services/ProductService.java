@@ -38,19 +38,19 @@ public class ProductService
             return  productDao.update(product);
         }
         else
-            return null;
+            return Optional.empty();
 
     }
 
     public Optional<Product> delete(int id)
     {
         Optional<Product>   product = get(id);
-        if(product.isPresent() && productDao.delete(id))
+        if(product.isPresent())
         {
-            return product;
+            productDao.delete(id);
         }
-        else
-            return null;
+
+        return product;
 
     }
 }

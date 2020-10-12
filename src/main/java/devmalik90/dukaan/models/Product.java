@@ -1,27 +1,31 @@
 package devmalik90.dukaan.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "PRODUCTS")
 public class Product 
 {
     @Id
+    @Column(name = "ID")
+    @GeneratedValue
     private int id;
 
-    @Column
-    private UUID uuid;
-
-    @Column
     private String name;
-
-    @Column
     private String mrp;
 
-    public Product(int id,UUID uuid, String name, String mrp) 
+
+    @JsonIgnore
+    private UUID uuid;
+
+    @Transient
+    private String message;
+
+    public Product(int id,UUID uuid, String name, String mrp)
     {
         this.id     =   id;
         this.uuid   =   uuid;
@@ -43,13 +47,6 @@ public class Product
         this.name = name;
     }
 
-    public String getMRP() {
-        return mrp;
-    }
-
-    public void setMRP(String mrp) {
-        this.mrp = mrp;
-    }
 
     public int getId() {
         return id;
@@ -59,11 +56,28 @@ public class Product
         this.id = id;
     }
 
-    public UUID getUUID() {
+
+    public String getMrp() {
+        return mrp;
+    }
+
+    public void setMrp(String mrp) {
+        this.mrp = mrp;
+    }
+
+    public UUID getUuid() {
         return uuid;
     }
 
-    public void setUUID(UUID uuid) {
+    public void setUuid(UUID uuid) {
         this.uuid = uuid;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
