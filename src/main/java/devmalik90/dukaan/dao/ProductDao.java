@@ -55,7 +55,7 @@ public class ProductDao
         String sql      =   "INSERT INTO PRODUCTS(UUID,NAME,MRP) VALUES(?,?,?)";
 
         int response    = jdbcTemplate.update( con -> {
-                                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                                PreparedStatement ps = con.prepareStatement(sql, new String[] {"id"});
                                 ps.setString(1,String.valueOf(product.generateUUID()));
                                 ps.setString(2,product.getName());
                                 ps.setString(3,product.getMRP());
