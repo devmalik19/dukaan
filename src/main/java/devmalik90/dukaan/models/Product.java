@@ -1,6 +1,7 @@
 package devmalik90.dukaan.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ public class Product
     private UUID uuid;
 
     @Transient
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String message;
 
     public Product(int id,UUID uuid, String name, String mrp)

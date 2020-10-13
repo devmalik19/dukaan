@@ -2,11 +2,11 @@ package devmalik90.dukaan.controllers;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import devmalik90.dukaan.exceptions.ResourceNotFoundException;
 import devmalik90.dukaan.models.Product;
 import devmalik90.dukaan.services.ProductService;
 
@@ -24,11 +24,13 @@ public class ProductController
     }
 
     @GetMapping("/{id}")
-    public Optional get(@PathVariable("id") int id)
+    public Product get(@PathVariable("id") int id)
     {
          Optional<Product> product = productService.get(id);
-         product.ifPresent(p -> {p.setMessage("Success");});
-         return product.isEmpty()?Optional.of("Not Found"):product;
+         if(product.isEmpty())
+            throw new ResourceNotFoundException("Product Not Found");
+         
+         return product.get();
     }
 
     @PutMapping
