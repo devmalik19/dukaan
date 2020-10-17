@@ -1,15 +1,15 @@
 package devmalik90.dukaan.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "config")
+@PropertySource("config.properties")
+@ConfigurationProperties()
 public class Config
 {
-    private boolean debug=false;
+    private boolean debug;
 
     public boolean isDebug() {
         return debug;
