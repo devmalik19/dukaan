@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.UUID;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "PRODUCTS")
@@ -16,9 +17,11 @@ public class Product
     @GeneratedValue
     private int id;
 
+    @NotBlank(message = "Name can not be blank")
     private String name;
-    private String mrp;
 
+    @NotBlank(message = "MRP can not be blank")
+    private String mrp;
 
     @JsonIgnore
     private UUID uuid;

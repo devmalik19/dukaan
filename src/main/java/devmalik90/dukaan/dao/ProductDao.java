@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import devmalik90.dukaan.models.Product;
@@ -48,22 +50,26 @@ public class ProductDao
     
     public Optional<Product> insert(Product product)
     {
-        String sql      =   "INSERT INTO PRODUCTS(UUID,NAME,MRP) VALUES(?,?,?)";
+        KeyHolder   keyHolder   =   new GeneratedKeyHolder();
 
+        String sql      =   "INSERT INTO PRODUCTS(UUID,NAME,MRP) VALUES(?,?,?)";
         int response    = jdbcTemplate.update( con -> {
-                                PreparedStatement ps = con.prepareStatement(sql);
+                                PreparedStatement ps = con.prepareStatement(sql,new String[]{"ID"});
                                 ps.setString(1,String.valueOf(product.generateUUID()));
                                 ps.setString(2,product.getName());
                                 ps.setString(3,product.getMrp());
 
                                 return  ps;
-                            });
+                            },keyHolder);
 
 
         if(response==0)
             return Optional.empty();
         else
+        {
+            product.setId(keyHolder.getKey().intValue());
             return Optional.ofNullable(product);
+        }
     }
 
     public Optional<Product> update(Product product)

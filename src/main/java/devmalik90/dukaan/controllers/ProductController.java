@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import devmalik90.dukaan.exceptions.ResourceNotFoundException;
 import devmalik90.dukaan.models.Product;
 import devmalik90.dukaan.services.ProductService;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/product")
@@ -24,37 +27,34 @@ public class ProductController
     }
 
     @GetMapping("/{id}")
-    public Product get(@PathVariable("id") int id)
+    public Product get(@PathVariable("id") int id) throws ResourceNotFoundException
     {
-         Optional<Product> product = productService.get(id);
-         if(product.isEmpty())
-            throw new ResourceNotFoundException("Product Not Found");
-         
-         return product.get();
+        Optional<Product> optionalProduct = productService.get(id);
+        return optionalProduct.orElseThrow(()->new ResourceNotFoundException("Product Not Found"));
     }
 
     @PutMapping
-    public Optional<Product> create(@RequestBody Product product)
+    public Product create(@Valid @RequestBody Product product) throws ResourceNotFoundException
     {
         Optional<Product> optionalProduct =  productService.create(product);
         optionalProduct.ifPresent(p -> p.setMessage("Product Created"));
-        return  optionalProduct;
+        return optionalProduct.orElseThrow(()->new ResourceNotFoundException("Product Not Found"));
     }
 
     @PostMapping("/{id}")
-    public Optional<Product> update(@PathVariable("id") int id,@RequestBody Product product)
+    public Product update(@PathVariable("id") int id, @RequestBody Product product) throws ResourceNotFoundException
     {
         Optional<Product> optionalProduct =   productService.update(id,product);
         optionalProduct.ifPresent(p -> p.setMessage("Product Updated"));
-        return  optionalProduct;
+        return  optionalProduct.orElseThrow(()->new ResourceNotFoundException("Product Not Found"));
     }
 
     @DeleteMapping("/{id}")
-    public Optional<Product> delete(@PathVariable("id") int id)
+    public Product delete(@PathVariable("id") int id) throws ResourceNotFoundException
     {
         Optional<Product> optionalProduct =   productService.delete(id);
         optionalProduct.ifPresent(p -> p.setMessage("Product Deleted"));
-        return  optionalProduct;
+        return  optionalProduct.orElseThrow(()->new ResourceNotFoundException("Product Not Found"));
     }
 
     @GetMapping("/search/{search}")
