@@ -1,4 +1,4 @@
-package devmalik90.dukaan.exceptions;
+package devmalik90.dukaan.exception;
 
 import devmalik90.dukaan.config.Config;
 import devmalik90.dukaan.config.Exception;

@@ -11,7 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import devmalik90.dukaan.models.Product;
+import devmalik90.dukaan.model.Product;
 
 @Repository
 public class ProductDao 
@@ -21,7 +21,7 @@ public class ProductDao
 
     public List<Product> getAll()
     {
-        String sql = "SELECT * FROM PRODUCTS";
+        String sql = "SELECT * FROM PRODUCT";
         return jdbcTemplate.query(sql, (resultSet,i) -> 
             new Product(
                             Integer.parseInt(resultSet.getString("id")) ,
@@ -34,7 +34,7 @@ public class ProductDao
 
     public Optional<Product> get(int id)
     {
-        String sql = "SELECT * FROM PRODUCTS WHERE ID = ?";
+        String sql = "SELECT * FROM PRODUCT WHERE ID = ?";
         List<Product> product = jdbcTemplate.query(
                 sql,
                 new Object[]{id},
@@ -52,7 +52,7 @@ public class ProductDao
     {
         KeyHolder   keyHolder   =   new GeneratedKeyHolder();
 
-        String sql      =   "INSERT INTO PRODUCTS(UUID,NAME,MRP) VALUES(?,?,?)";
+        String sql      =   "INSERT INTO PRODUCT(UUID,NAME,MRP) VALUES(?,?,?)";
         int response    = jdbcTemplate.update( con -> {
                                 PreparedStatement ps = con.prepareStatement(sql,new String[]{"ID"});
                                 ps.setString(1,String.valueOf(product.generateUUID()));
@@ -74,7 +74,7 @@ public class ProductDao
 
     public Optional<Product> update(Product product)
     {
-        String sql      =   "UPDATE PRODUCTS SET NAME = ?, MRP = ? WHERE ID = ?";
+        String sql      =   "UPDATE PRODUCT SET NAME = ?, MRP = ? WHERE ID = ?";
         int response    =   jdbcTemplate.update(sql,
                                 product.getName(),
                                 product.getMrp(),
@@ -90,7 +90,7 @@ public class ProductDao
 
     public boolean delete(int id)
     {
-        String sql      =   "DELETE FROM PRODUCTS WHERE ID = ?";
+        String sql      =   "DELETE FROM PRODUCT WHERE ID = ?";
         int response    =   jdbcTemplate.update(sql,id);
         return  response>0;
     }

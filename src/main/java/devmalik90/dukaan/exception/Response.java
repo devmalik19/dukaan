@@ -1,4 +1,4 @@
-package devmalik90.dukaan.exceptions;
+package devmalik90.dukaan.exception;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;

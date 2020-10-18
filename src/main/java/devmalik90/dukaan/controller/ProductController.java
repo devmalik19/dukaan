@@ -1,15 +1,14 @@
-package devmalik90.dukaan.controllers;
+package devmalik90.dukaan.controller;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import devmalik90.dukaan.exceptions.ResourceNotFoundException;
-import devmalik90.dukaan.models.Product;
-import devmalik90.dukaan.services.ProductService;
+import devmalik90.dukaan.exception.ResourceNotFoundException;
+import devmalik90.dukaan.model.Product;
+import devmalik90.dukaan.service.ProductService;
 
 import javax.validation.Valid;
 

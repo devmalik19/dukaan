@@ -1,4 +1,4 @@
-package devmalik90.dukaan.services;
+package devmalik90.dukaan.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import devmalik90.dukaan.dao.ProductDao;
-import devmalik90.dukaan.models.Product;
+import devmalik90.dukaan.model.Product;
 
 @Service
 public class ProductService 

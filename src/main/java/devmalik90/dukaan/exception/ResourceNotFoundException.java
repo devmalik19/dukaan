@@ -1,4 +1,4 @@
-package devmalik90.dukaan.exceptions;
+package devmalik90.dukaan.exception;
 
 import org.springframework.http.HttpStatus;
 

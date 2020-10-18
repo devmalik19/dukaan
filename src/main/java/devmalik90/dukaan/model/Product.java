@@ -1,4 +1,4 @@
-package devmalik90.dukaan.models;
+package devmalik90.dukaan.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,13 +9,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "PRODUCTS")
-public class Product 
+public class Product
 {
     @Id
     @Column(name = "ID")
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @NotBlank(message = "Name can not be blank")
     private String name;
@@ -53,7 +52,7 @@ public class Product
     }
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
