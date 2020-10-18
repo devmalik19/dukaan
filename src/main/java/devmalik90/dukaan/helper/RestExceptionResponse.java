@@ -1,11 +1,11 @@
-package devmalik90.dukaan.exception;
+package devmalik90.dukaan.helper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import org.springframework.http.HttpStatus;
 
-public class Response
+public class RestExceptionResponse
 {
     private String errorMessage;
 
@@ -28,7 +28,7 @@ public class Response
         this.httpStatus = httpStatus;
     }
 
-    public Response(String errorMessage,HttpStatus httpStatus) {
+    public RestExceptionResponse(String errorMessage,HttpStatus httpStatus) {
         this.errorMessage = errorMessage;
         this.httpStatus = httpStatus;
     }

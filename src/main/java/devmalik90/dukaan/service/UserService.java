@@ -23,21 +23,14 @@ public class UserService
         return userRepository.findById(id);
     }
 
-    public Optional<User> create(User user)
+    public void save(User user)
     {
         userRepository.save(user);
-        return userRepository.findById(user.getId());
     }
 
-    public Optional<User> update(User user)
-    {
-        userRepository.save(user);
-        return userRepository.findById(user.getId());
-    }
-
-    public Optional<User> delete(User user)
+    public void delete(User user)
     {
         userRepository.delete(user);
-        return userRepository.findById(user.getId());
     }
+
 }

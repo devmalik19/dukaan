@@ -1,9 +1,9 @@
-package devmalik90.dukaan.exception;
+package devmalik90.dukaan.helper;
 
 import devmalik90.dukaan.config.Config;
 import devmalik90.dukaan.config.Exception;
+import devmalik90.dukaan.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class Handler
+public class ExceptionController
 {
     @Autowired
     private Config config;
@@ -21,25 +21,25 @@ public class Handler
     private Exception exception;
 
     @ExceptionHandler(java.lang.Exception.class)
-    public ResponseEntity<Response> catchAllExceptions(java.lang.Exception e)
+    public ResponseEntity<RestExceptionResponse> catchAllExceptions(java.lang.Exception e)
     {
         String msg  =   config.isDebug()?e.getMessage():exception.getDefaultMessage();
-        Response    response =   new Response(msg,HttpStatus.INTERNAL_SERVER_ERROR);
+        RestExceptionResponse    response =   new RestExceptionResponse(msg,HttpStatus.INTERNAL_SERVER_ERROR);
         return new  ResponseEntity<>(response,response.getHttpStatus());    
     }
 
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseEntity<Response> handleMethodArgumentNotValidException(MethodArgumentNotValidException e)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<RestExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e)
     {
         String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-        Response    response    = new Response(message,HttpStatus.UNPROCESSABLE_ENTITY);
+        RestExceptionResponse    response    = new RestExceptionResponse(message,HttpStatus.UNPROCESSABLE_ENTITY);
         return  new  ResponseEntity<>(response,HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Response> resourceNotFoundException(ResourceNotFoundException e) 
+    public ResponseEntity<RestExceptionResponse> resourceNotFoundException(ResourceNotFoundException e)
     {
-        ResponseEntity<Response>    response;
+        ResponseEntity<RestExceptionResponse>    response;
         response    =    new  ResponseEntity<>(e.getResponse(),e.getHttpStatus());
         return response;
     }
